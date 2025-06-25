@@ -1,51 +1,50 @@
 1. Creating and renaming Files/Directories:
     a.) Creating directory named test_dir:
         Command: mkdir test_dir
-        Explanation:
+        Explanation: mkdir is command use to makdirectory and test_dir is the name of folder directory
     b.) Creating empty file example.txt:
         Command: touch example.txt
-        Explanation:
+        Explanation: touch to create file and example.txt is file name
     c.) Renaming example.txt to renamed_example.txt:
         Command:mv example.txt renamed_example.txt
-        Explanation:
+        Explanation: mv to rename file example.txt is the name to be renamed and renamed_example.txt is the new name
 
 2. Viewing File Contents:
     a.) Using cat to display the contents of /etc/passwd:
         Command: cat ./etc/passwd
-        Explanation:
+        Explanation: cat to writ the content isnisd ethe file 
     b.) Displaying first five lines of /etc/passwd:
         Command: head -n 5 ./etc/passwd
-        Explanation:
+        Explanation: head to get the head lines -n 5 to get count of file
     c.) Displaying last 5 lines of /etc/passwd:
-        Command: head -n 5 ./etc/passwd
-        Explanation:
+        Command: tail -n 5 ./etc/passwd
+        Explanation: tail to get the end lines in file -n 5 to g tcount of file
 3. Searching for Patterns:
     a.)  Using grep to find all lines containing "root" in /etc/passwd:
-        Command:
-        Explanation:
+        Command: cat ./etc/passwd.txt | grep root
+        Explanation: grep is used to find the word called root following the cat file read
 
 4. Zipping and Unzipping:
     a.) Compressing the test_dir directory into a file named test_dir.zip using zip:
-        Command:
-        Explanation:
+        Command: zip test_dir.zip test_dir
+        Explanation: ziipiung the file as test_dir.zip it will create a new zip file with the test_dir zipped 
     b.) Unzip the test_dir.zip into a new directory named unzipped_dir:
-        Command:
-        Explanation:
+        Command: unzip test_dir.zip -d unzipped_dir
+        Explanation: unzipping the file
 
 5. Downloading files:
     a.) Using wget to download the file from URL
         (https://example.com/sample.txt)
-        Command:
-        Explanation:
+        Command: wget https://example.com/sample.txt
+        Explanation: simpe to get the content downloaded from the internet
 
 6. Changing Permissions:
     a.) Creating file named secure.txt and changing permissions to read-only for everyone using chmod
-        Command:
-        Explanation:
-
+        Command: chmod -w secure.txt
+        Explanation: every file created has the default rw access removing the w access via chmod -w file name
 7. Working with Environment variable:
     a.) Use Export to set a new environment variable called MY_VAR with the value "Hello, Linux".
-        Command:
-        Explanation:
+        Command: export MY_VAR="Hello, Linux!"
+        Explanation: enetring environment varable to value Hello, Linx, now whenever we gave command echo $MY_VAR it will give Hello, Linux! as answer
 
     
