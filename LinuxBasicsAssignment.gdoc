@@ -1,23 +1,23 @@
 1. Creating and renaming Files/Directories:
     a.) Creating directory named test_dir:
-        Command:
+        Command: mkdir test_dir
         Explanation:
     b.) Creating empty file example.txt:
-        Command:
+        Command: touch example.txt
         Explanation:
     c.) Renaming example.txt to renamed_example.txt:
-        Command:
+        Command:mv example.txt renamed_example.txt
         Explanation:
 
 2. Viewing File Contents:
     a.) Using cat to display the contents of /etc/passwd:
-        Command:
+        Command: cat ./etc/passwd
         Explanation:
     b.) Displaying first five lines of /etc/passwd:
-        Command:
+        Command: head -n 5 ./etc/passwd
         Explanation:
     c.) Displaying last 5 lines of /etc/passwd:
-        Command:
+        Command: head -n 5 ./etc/passwd
         Explanation:
 3. Searching for Patterns:
     a.)  Using grep to find all lines containing "root" in /etc/passwd:
