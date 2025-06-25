@@ -1,0 +1,51 @@
+1. Creating and renaming Files/Directories:
+    a.) Creating directory named test_dir:
+        Command:
+        Explanation:
+    b.) Creating empty file example.txt:
+        Command:
+        Explanation:
+    c.) Renaming example.txt to renamed_example.txt:
+        Command:
+        Explanation:
+
+2. Viewing File Contents:
+    a.) Using cat to display the contents of /etc/passwd:
+        Command:
+        Explanation:
+    b.) Displaying first five lines of /etc/passwd:
+        Command:
+        Explanation:
+    c.) Displaying last 5 lines of /etc/passwd:
+        Command:
+        Explanation:
+3. Searching for Patterns:
+    a.)  Using grep to find all lines containing "root" in /etc/passwd:
+        Command:
+        Explanation:
+
+4. Zipping and Unzipping:
+    a.) Compressing the test_dir directory into a file named test_dir.zip using zip:
+        Command:
+        Explanation:
+    b.) Unzip the test_dir.zip into a new directory named unzipped_dir:
+        Command:
+        Explanation:
+
+5. Downloading files:
+    a.) Using wget to download the file from URL
+        (https://example.com/sample.txt)
+        Command:
+        Explanation:
+
+6. Changing Permissions:
+    a.) Creating file named secure.txt and changing permissions to read-only for everyone using chmod
+        Command:
+        Explanation:
+
+7. Working with Environment variable:
+    a.) Use Export to set a new environment variable called MY_VAR with the value "Hello, Linux".
+        Command:
+        Explanation:
+
+    
