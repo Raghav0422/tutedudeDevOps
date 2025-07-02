@@ -1,0 +1,165 @@
+
+IAM & AWS CLI:
+  User Group,Policies:
+    * there can be lot of groups in single team, remeber the example of 6, three are devlopers , 2 are testers and one is independent, so they defined the group 
+      now from that two teams devloper and the tester there will be another group of team leads
+    * Permission is assigned to the each user and it depend on Group
+    * permission data mainly stored in the form of JSON
+    * Policies define the permission of the users
+    * Json file basically contains:
+          {
+            "Version": "2012-10-17",  (never change it let it remain as it is)
+            "Statement":[
+              {
+                "Effect":"Allow",
+                "Action":"ec2.Describe*",
+                "Resorce":"*",
+              },
+              {
+                "Effect":"Allow",
+                "Action":"elasticloadbalancing.Describe",
+                "Resorce":"*",
+              },
+              {
+                "Effect":"Allow",
+                "Action":[
+                  "cloudwatch":"ListMetrics",
+                  "cloudwatch":"GetMetricsStatics",
+                  "cloudwatch":"Describe",
+                ],
+                "Resorce":"*",
+              },            ]
+          }
+
+  IAM User CREATION STEPS:
+    * there are lots of services availble in AWS, directly search for IAM and you will see the option open it
+    * IAM services are global you can in menu bar, that means no specific reason for it, where some other services has region
+    * go to IAM-> on left Users -> 
+      you will see 0 users (basically you are the root user and it is not the best practice to use the root user, you can check it in your profile dashbord top right)
+    * we will create user via clicking on create user button
+      enter User Name >> select the IAM user >> Select the Manual password >> setup the password (if its your ID)
+      else just let go with Autigenerate password >> Ask for password reset on next login
+    * Next it will ask to grant the permissions
+      if you have any check it, else create a group >> click butto create group and then check it
+      Set Group Name: Admin >> below there you will see list of policy name select the policy Adminstrator Access >> Click on create User Group
+      so all done its setup and the new user is created along with grou also created
+    * go to Dashboard , on right you will see the Account ID and the Signin, you can change your sign in link via clicking on Create "Account Allas"
+    * so we ahve created the user and setted the allas name, no time to login
+      just open new private window, go to ASW sigin page, you will see two options 
+        Root USer 
+        IAM User
+      select the IAM user >> it will ask for the name 12 digit allas, enter the name which you had set >> signin
+
+  IAM Policies:
+    * Same 6 person diagram rule, groups divdided, and one person can have two policies, and one can have separate policiy only
+    * Below is the structure:
+      Consists of three things:
+        1.  Version
+        2.  Id
+        3.  Statement: further statemnet consist of:
+                        Sid, Effect, Principal, Action, Resource, Condition
+          {
+            "Version": "2012-10-17",  (policy language version, never change it let it remain as it is)
+            "id":"S3-Account-Permission"  (it is just id of policy : optional)
+            "Statement":[
+              {
+                "Sid":"1",  (id of statement : optional)
+                "Effect":"Allow",  (whether statement Allow or deny access to certain API )
+                "Principal":{  (it tells to which account or user or role you are going to apply the poicy)
+                  "AWS":["arn:aws:iam:12345678012:root"]  (and with this it seems applying policy to root user of your AWS account)
+                },
+                "Action":[  (list of API , either allow or deny based on effects)
+                  "ec2.Describe*",
+                  "s3:GetObject",
+                  "s3:PutObject"
+                ]
+                "Resorce":["arn:aws:s3::myBucket/*"],  (it simply define list of resources where we are going to use for this policy)
+                "Condition":  (condition whn we impliment this policy: Optional)
+              }
+            ]
+          }
+
+  IAM Policy Hands-On:
+    so as we have created the user so this user have the admin access, we can remove the access
+    * simply go to root user account >> open the Group tab >> there you will see the admin group >> click on it >> you will see the list of user added to group >> remove the user
+      and once it is removed new user named stephan cannot view any user at there end (both consol have the same GUI differnec is only level of access)
+    * so we ahve removed from group, lets create the another group and it will be created from the root account
+      go to permission tab >> you will see numbr of policies >> Add permission policies >> attach policy directly >> search policy name IAMReadOnlyAccess >> add permission
+    * so above you have created user and the group, you can also create policy, and view all policy preset in the AWS
+      -simply go to policy in left dashbard you will see list of policies click on it to ge the details and there JSON working 
+      -to create new policy >> visual or json selevct your choice >> visual >> select the service IAM >> Action applied , list user, get user, >> select resources >> next >> policy name >> create policy
+
+  IAM MFA:
+    * Password policies need to be set, like Password, uppercase, one lower + slecial character and length, 
+      must be change after sometime, user must able to login etc
+    * Can setup the MFA for user, its simple Multifactor authentication, it can be:
+        Virtual MFA: Google Authenticator, or Authy (by Amazon)
+        Universal 2nd Factor Security Key:  Yubikey by Yubico, its pend drive like harddive consist of key, need to insert that key in your device for authentication
+      MFA Device in AWS:
+        Hardware Key Fob MFA Device:provided by gemlto third party to AWS 
+        Hardware Key Fob MFA Device for AWS GovCloud (US): provided by SurePassID third party
+  Setting up MFA:
+    * For Password policies setup:
+        Go to Account Settings >> Password Policy Edit >> set up with IAM password or Custom password and check the policies you need
+    * MFA policies setup: 
+        Click on top right account name >> security credentials >> Set up MFA >> Authenticator App [Security Key, hardware key] >> download Authy app in ypur mobile device
+        >> generate the QR code >> scan the QR code from mobile >> verify two MFA code from mobile >> add MFA
+
+  AWS access ways:
+    * three ways to access the AWS:
+        AWS Management console (by using the MFA + password)
+        AWS CLI (protected by the access key )
+        AWS SDK, for code protected by access key
+      access key are secrete dont share it with anyone
+
+  AWS Clis installation on windows
+    * simply go to the google, search for AWS cli for windows and they will provide you the same
+      open link get it download and use admin rights to get it installed
+
+  Creating access Key:
+    * after installing now we are back to the amazon user dashboard
+        click on your name >> security credentials >> scroll down Access key- create access key >> command line interface >> next >> create access key
+    * now you got the key, so simply open installed CLI for AWS write command
+        aws configured >> it will ask for access ID and password (provide it from access key created) >> and further details 
+      once configured get the details, via command
+        aws iam list-users (it will give the list of all user in your account)
+
+  CloudShell:
+    * on search bar enter CloudShell, >> open it you will see the comand prompt type thing, >> sleect the region as it is availble for few regions >> and do you command things
+
+  Creating IAM ROle:
+    * basically IAM ROle is to create a user which will work on your behalf , its not the physical user just virtual server and it is EC2 instance for us
+      there are other Role as well
+        EC2 Intance role
+        Lambda Function role
+        Roles of cloud formation 
+
+  Creating Role:
+    * go to Role on left dashboard >> AWS Services >> Use case (select the service to which  this role applied) >> EC2 >> next >> add a policies to role >> IAMReadOnlyAccess >>
+      next >> Role Name >> Description >> create Role
+
+  IAM Security Tool:
+    * Two security Tools
+        IAM Credential Report (account level): a report that list all your account users and various credential status
+        IAM Access Advisor (user level): it shows the service permission granted to the user and when it was last accessed, we can use this information to revice policies
+
+  Working on IAM security Tool:
+    * For IAM Crendetials Report
+        go to credential report >> download report (you will see the excel file conating list of users , level of access, when ws last time or not and many other details)
+    * For IAM Access Advisor: (it will show me which services is access by the user and when)
+        Users >> click on user >> Access Advisor >> 
+
+#########################################################################################################################################################
+####################################################################################################################################################
+EC2 Basics:
+  * Its Elastic Cloud Computing (IAAS)
+  * Capabilities:
+      Renting virtual machines, 
+      Storing data on virtual drives (EBS)
+      Distributing load acros machine (ELB)
+      Scaling the services using Auto scaling group (ASG)
+
+      
+      
+
+
