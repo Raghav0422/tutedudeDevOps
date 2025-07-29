@@ -1,0 +1,27 @@
+get the wsl2 installed for linux and the docker desktop foile, get the gocker frsktop file open and slect the WSL2 option rather then Hyper V
+--------------------------
+Creating Docker File:
+    we will create a docker file in the folder name Dockerfile
+    Dockerfile we will put what language and what all other details need to create the images
+    like if you need the Python to be in docker images you will use
+            FROM Python
+    and then we have to add the py file via ADD , there will be two arhgument which must return to ADD
+    one is file name and other is the file path
+            ADD app.py /app.py
+    then we will give the command which need to run to run the python app.py
+            CMD ['python','app.py']
+    then we build the docker container
+            docker build -t dockerFoldername .
+
+        
+    
+---------------------------
+docker images:                     to get the list of docker images
+docker run container name:         to run the container (might be immediately stop the container)
+docker run it ubuntu:              it will keep the container running 
+docker run it -p 7990:80 nginx:    -p here is use to get the port, as you know the localhost run on our system, and the mginx will run in docker so just to expose it from docker we use -p port
+docker run it -p 7990:80 -d nginx: to run container in background we use -d
+docker ps:                         to list all runing container
+docker ps -a:                      to list all the container run in past
+docker logs container id:          to get the logs of container
+curl:                              it is use to get response from particular server(we will use it for test port mapping)
