@@ -1,27 +1,87 @@
-get the wsl2 installed for linux and the docker desktop foile, get the gocker frsktop file open and slect the WSL2 option rather then Hyper V
+get the wsl2 installed for linux and the docker desktop file, get the docker for desktop file open and slect the WSL2 option rather then Hyper V
 --------------------------
 Creating Docker File:
     we will create a docker file in the folder name Dockerfile
-    Dockerfile we will put what language and what all other details need to create the images
-    like if you need the Python to be in docker images you will use
-            FROM Python
-    and then we have to add the py file via ADD , there will be two arhgument which must return to ADD
-    one is file name and other is the file path
-            ADD app.py /app.py
-    then we will give the command which need to run to run the python app.py
-            CMD ['python','app.py']
+    Dockerfile we will write the below code
+        we will put what language and what all other details need to create the images
+        like if you need the Python to be in docker images you will use
+                    
+                    FROM Python:3.9-alpine
+
+        we can also add the work directory, it means on which directory we are getting worked
+                    
+                    WORKDIR /tree
+        
+        and then we have to add the py file via ADD , there will be two arhgument which must return to ADD
+        one is file name and other is the file path
+            
+                    ADD app.py /app.py
+                            OR
+                    ADD . .
+            
+            this means adding every file i this current location
+
+        then we will give the command which need to run to run , return the list of two
+        one with language and other is path , it must same as we write in ADD
+                
+                    CMD ['python','app.py']
+            
+            incase every file you ADD is not the python so the above CMD wont work
+            what we do i add the endpoint 
+                
+                    ENTRYPOINT ["python"]
+                    CMD ["app.py"]
+
+        there is one more command like 
+
+                    RUN a.txt
+                    RUN echo hi
+            just to run prgram on the go
+
     then we build the docker container
+    
             docker build -t dockerFoldername .
 
-        
+        docker folder name will appear the Repository name in images so you can give whatever you want
+        and if you want to read some certain DOcker fle in folder then you can use -file
+
+            docker build -t dockerFoldername -f Dockerfile .
+    
+    now its time to run the build file container'
+
+            docker run -it dockerfoldername   
+-------------------------------
+.DOCKERIGNORE
+If some files you dont want to keep in the DockerContainer while building, just add it in
+        .dockerignore 
+    inside it enter the name of file. like node_module, app.py etc
     
 ---------------------------
-docker images:                     to get the list of docker images
-docker run container name:         to run the container (might be immediately stop the container)
-docker run it ubuntu:              it will keep the container running 
-docker run it -p 7990:80 nginx:    -p here is use to get the port, as you know the localhost run on our system, and the mginx will run in docker so just to expose it from docker we use -p port
-docker run it -p 7990:80 -d nginx: to run container in background we use -d
-docker ps:                         to list all runing container
-docker ps -a:                      to list all the container run in past
-docker logs container id:          to get the logs of container
-curl:                              it is use to get response from particular server(we will use it for test port mapping)
+MAPPING PORT:
+    so when ever we use run the image it is running inside the docker, not on local device, so we can test it via localhost browser
+    we have to made it available to localhost via Mapping the port
+
+        docker run -it -p 4000:8000 ares-backend
+
+    so here -p define the port and 4000 is the running port after localhost and 8000 is localhost
+    (one thing your applicvation must be awat=re about port or you can make all port available
+      in this flask app i will do via adding host='0.0.0.0' in the main run field)
+
+-------------------
+DOCKER COMMANDS:
+    docker images:                     to get the list of docker images
+    docker run container name:         to run the container (might be immediately stop the container)
+    docker run -it ubuntu:             it will keep the container running 
+    docker run -it -p 7990:80 nginx:   -p here is use to get the port, as you know the localhost run on our system, and the mginx will run in docker so just to expose it from docker we use -p port
+    docker run -it -p 7990:80 -d nginx: to run container in background we use -d
+    docker stop name:                  to stop running container
+    docker ps:                         to list all runing container
+    docker ps -a:                      to list all the container run in past
+    docker logs container id:          to get the logs of container
+    docker rmi imageid:                to remove image
+    docker image ls dangling=true:     it makes all the image dangling so that we can remove it in one shot
+    docker image prune:                and now it deletes all images
+    docker rm name:                    to delete container
+    docker rm $(docker ps -aq)         to delete all running history might be
+    docker pull:                       (download an image) its pull the image from net not cpntainer
+    curl:                              it is use to get response from particular server(we will use it for test port mapping)

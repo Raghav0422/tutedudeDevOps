@@ -22,10 +22,10 @@ except Exception as e:
 app=Flask(__name__)
 
 @app.route('/submittodoitem',methods=['POST'])
-def submittolist();
-    form_data=dict{request.form}
+def submittolist():
+    form_data=dict(request.form)
     collection.insert_one(form_data)
     return form_data
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(port=8000,debug=True,host='0.0.0.0')
